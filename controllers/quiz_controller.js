@@ -1,13 +1,20 @@
+
 // GET /question
-exports.question = function(req, res) {
-   res.render('quizes/question', {pregunta: 'Capital de Italia'});
+exports.question = function(req, res, next) {
+
+	var answer = req.query.answer || '';
+
+	res.render('quizzes/question', {question: 'Capital de Italia',
+								    answer: answer});
 };
 
 // GET /check
-exports.answer = function(req, res) {
-	if( req.query.respuesta === 'Roma' ){
-	res.render('quizes/answer', {respuesta: 'Correcto'});
-	}else{
-		res.render('quizes/answer', {respuesta: 'Incorrecto'});
-	}
+exports.check = function(req, res, next) {
+
+	var answer = req.query.answer || "";
+
+	var result = answer === 'Roma' ? 'Correcta' : 'Incorrecta';
+
+	res.render('quizzes/result', { result: result, 
+								   answer: answer });
 };
